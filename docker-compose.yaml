@@ -4,30 +4,10 @@ services:
     container_name: dockhand
     restart: unless-stopped
     ports:
-      - 9001:3000
-    environment:
-    - DATABASE_URL=${DATABASE_URL}
+      - 3000:3000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./dockhand_data:/app/data
-    depends_on:
-      - postgres
-    networks:
-      - dockhand
+      - dockhand_data:/app/data
 
-  postgres:
-    image: postgres:16-alpine
-    container_name: dockhand_postgres
-    restart: unless-stopped
-    environment:
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    - POSTGRES_USER=${POSTGRES_USER}
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
-    networks:
-      - dockhand
-
-networks:
-  dockhand:
-    name: dockhand
+volumes:
+  dockhand_data:
